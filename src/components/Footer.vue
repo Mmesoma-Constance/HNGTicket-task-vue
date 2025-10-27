@@ -3,7 +3,7 @@
     <div class="container-app py-12">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div class="col-span-1 md:col-span-2">
-          <h3 class="text-start pl-4 text-xl font-bold mb-4 text-[#E11791]">
+          <h3 class="text-start text-xl font-bold mb-4 text-[#E11791]">
             TicketHub
           </h3>
           <p class="text-muted-foreground max-w-md">

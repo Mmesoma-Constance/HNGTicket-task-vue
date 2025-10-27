@@ -79,14 +79,14 @@
 
       <div class="container-app relative z-10">
         <div class="p-10 md:p-12 text-center shadow-2xl border-2">
-          <h2 class="text-4xl font-bold mb-4">Ready to Get Started?</h2>
+          <h2 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Get Started?</h2>
           <p class="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Join thousands of teams using TicketHub to deliver amazing
             customer support
           </p>
           <RouterLink
             to="/auth/signup"
-            class="md:text-lg p-2 px-8 bg-[#E11791] text-white rounded-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center"
+            class="text-[15px] md:text-lg p-2 px-8 bg-[#E11791] text-white rounded-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-center"
           >
             Create Your Account
           </RouterLink>

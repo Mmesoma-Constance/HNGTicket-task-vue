@@ -4,7 +4,7 @@
     <header class="bg-white border-b border-gray-300 p-4 flex justify-between items-center sticky top-0 z-50">
       <h1 class="text-2xl font-bold text-[#E11791]">TicketHub</h1>
       <div class="flex items-center gap-4">
-        <span class="hidden md:flex">Welcome, {{ user?.name }}!</span>
+        <span class="hidden md:flex">Welcome, {{ state.user?.name || "Guest" }}!</span>
         <button
           @click="handleLogout"
           class="p-2 px-8 bg-[#E11791] text-white rounded-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
@@ -17,19 +17,21 @@
     <!-- Main -->
     <main class="py-12 px-4 max-w-6xl mx-auto">
       <div class="mb-12">
-        <span class="md:hidden">Welcome, {{ user?.name }}!</span>
+        <span class="text-lg md:hidden">Welcome, {{ state.user?.name || "Guest" }}!</span>
         <h2 class="text-4xl font-bold mb-4">Dashboard</h2>
         <p>Here's an overview of your support tickets</p>
       </div>
 
-      <!-- Stats -->
       <div class="flex flex-wrap gap-4 mb-12">
         <div
           v-for="(stat, index) in stats"
           :key="index"
           class="flex-1 min-w-[250px] p-6 border-2 border-gray-300 rounded-lg transition-all duration-300"
         >
-          <div :class="`w-12 h-12 rounded-lg ${stat.color} flex justify-center items-center mb-4`">
+          <div
+            class="w-12 h-12 rounded-lg flex justify-center items-center mb-4"
+            :class="stat.color"
+          >
             <span>🎫</span>
           </div>
           <p class="text-gray-600 mb-2">{{ stat.label }}</p>
@@ -37,7 +39,6 @@
         </div>
       </div>
 
-      <!-- Call to Action -->
       <div class="p-8 border-2 border-gray-300 rounded-lg text-center">
         <h3 class="text-2xl font-bold mb-4">Ready to manage your tickets?</h3>
         <p class="text-gray-600 mb-6">
@@ -62,13 +63,14 @@
 <script>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext"; // ✅ same custom auth composable
 
 export default {
   name: "Dashboard",
   setup() {
-    const { user, logout } = useAuth();
     const router = useRouter();
+    const { state, logout } = useAuth();
+
     const tickets = ref([]);
 
     onMounted(() => {
@@ -84,8 +86,12 @@ export default {
     };
 
     const totalTickets = computed(() => tickets.value.length);
-    const openTickets = computed(() => tickets.value.filter((t) => t.status === "open").length);
-    const resolvedTickets = computed(() => tickets.value.filter((t) => t.status === "closed").length);
+    const openTickets = computed(() =>
+      tickets.value.filter((t) => t.status === "open").length
+    );
+    const resolvedTickets = computed(() =>
+      tickets.value.filter((t) => t.status === "closed").length
+    );
 
     const stats = computed(() => [
       { label: "Total Tickets", value: totalTickets.value, color: "bg-sky-200" },
@@ -93,7 +99,12 @@ export default {
       { label: "Resolved Tickets", value: resolvedTickets.value, color: "bg-gray-200" },
     ]);
 
-    return { user, tickets, stats, handleLogout };
+    return {
+      state,
+      tickets,
+      handleLogout,
+      stats,
+    };
   },
 };
 </script>

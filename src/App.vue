@@ -1,24 +1,11 @@
-<template>
-  <div id="app">
-    <Landing />
-  </div>
-</template>
+<!-- src/App.vue -->
+<script setup>
+import { provideAuth } from "@/contexts/AuthContext.js";
 
-<script>
-import Landing from './components/Landing.vue'
-
-export default {
-  name: 'App',
-  components: {
-    Landing,
-  },
-}
+// 👇 Call provideAuth() ONCE globally
+provideAuth();
 </script>
 
-<style>
-/* optional styling */
-#app {
-  text-align: center;
-  margin-top: 40px;
-}
-</style>
+<template>
+  <router-view />
+</template>
